@@ -1,0 +1,5 @@
+echo "Script name: lookup
+Author: $USER
+Date: `date +%D`
+Cau 3 Bai tap thuc hanh 5"
+
