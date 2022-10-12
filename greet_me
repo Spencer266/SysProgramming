@@ -1,0 +1,17 @@
+echo -e "User: $USER
+File: greet_me
+Usage: Greeting and display information\n
+Greeting $USER\n"
+date
+echo Machine: $HOSTNAME
+pwd
+ls -la
+echo "TERM: $TERM
+PATH: $PATH
+HOME: $HOME"
+du -a
+echo -n "Group ID: "
+id -g
+echo "Làm ơn, bạn có thể cho tôi vay $VND 50.000 được không?"
+echo "good bye"
+date +%X
