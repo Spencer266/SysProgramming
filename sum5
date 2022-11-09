@@ -1,0 +1,8 @@
+s=0
+k=1
+while [ $k -le 5 ]
+do
+    ((s=s+k))
+    ((k=k+1))
+done
+echo "Tong: $s"

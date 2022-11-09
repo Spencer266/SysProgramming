@@ -1,5 +1,16 @@
+#!/bin/bash
 while true
 do
-	echo "hi bitch"
-	sleep 500&
+	res=(`grep "khung bo\|bom" -rl .`)
+	if [ "${#res[@]}" -gt 0 ];
+	then
+		ind=0
+		while [ "$ind" -lt "${#res[@]}" ]; do
+			echo "${res[ind]} -> `stat -c '%U' ${res[ind]}`" > mailing
+			((ind++))
+		done
+	else
+		echo "`date +%T`: an toan" > /tmp/sec
+	fi
+	sleep 60
 done
