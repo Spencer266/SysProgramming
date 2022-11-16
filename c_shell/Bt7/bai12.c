@@ -5,6 +5,11 @@
 #include <time.h>
 #include <sys/types.h>
 #include <dirent.h>
+#include <unistd.h>
+#include <libgen.h>
+#include <pwd.h>
+#include <grp.h>
+
 struct stat mystat, *sp;
 char *t1 = "xwrxwrxwr-------";
 char *t2 = "----------------";
@@ -20,33 +25,46 @@ int ls_file(char *fname)
         exit(1);
     }
     if ((sp->st_mode & 0xF000) == 0x8000)
-        printf("%c", .-.);
+        printf("-");
     if ((sp->st_mode & 0xF000) == 0x4000)
-        printf("%c", .d.);
+        printf("d");
     if ((sp->st_mode & 0xF000) == 0xA000)
-        printf("%c", .l.);
+        printf("l");
     for (i = 8; i >= 0; i--)
     {
         if (sp->st_mode & (1 << i))
             printf("%c", t1[i]);
         else
             printf("%c", t2[i]);
-    }
-    printf("%4d ", sp->st_nlink);
-    printf("%4d ", sp->st_gid);
-    printf("%4d ", sp->st_uid);
-    printf("%8d ", sp->st_size);
+	}
+
+    printf("%2li ", sp->st_nlink);
+    printf("%s ", getpwuid(sp->st_uid)->pw_name);
+    printf("%s ", getgrgid(sp->st_gid)->gr_name);
+    
+	printf("%6li ", sp->st_size);
     strcpy(ftime, ctime(&sp->st_ctime));
     ftime[strlen(ftime) - 1] = 0;
     printf("%s ", ftime);
     printf("%s", basename(fname));
+	printf("\n");
 }
-printf("\n");
-}
+
 int ls_dir(char *dname)
 {
-    // use ….
+	DIR *dir;
+    struct dirent *dirp;
+	char path[256];
+	
+	dir = opendir(dname);
+	while ((dirp = readdir(dir))) {
+		strcpy(path, dname);
+		strcat(path, "/");
+		strcat(path, dirp->d_name);
+		ls_file(path);
+	}
 }
+
 int main(int argc, char *argv[])
 {
     struct stat mystat, *sp = &mystat;
@@ -72,4 +90,5 @@ int main(int argc, char *argv[])
         ls_dir(path);
     else
         ls_file(path);
+	return 0;
 }
