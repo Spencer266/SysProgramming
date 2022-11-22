@@ -1,6 +1,7 @@
 #include <sys/resource.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <sys/wait.h>
 
 int main() {
 	pid_t pid, pida[10];
@@ -20,9 +21,9 @@ int main() {
 	}
 
 	int prio = getpriority(PRIO_PROCESS, getpid());
-	if (pid) { 
+    if (pid) {
+    	wait(NULL);
 		printf("Parent priority: %d\n", prio);
-		sleep(5);
 	}
 	else {
 		printf("Child priority: %d\n", prio);
