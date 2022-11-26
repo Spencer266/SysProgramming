@@ -21,7 +21,7 @@ int main() {
 	}
 
 	int prio = getpriority(PRIO_PROCESS, getpid());
-    if (pid) {
+	if (pid) {
     	wait(NULL);
 		printf("Parent priority: %d\n", prio);
 	}
