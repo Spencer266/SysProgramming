@@ -5,7 +5,8 @@
 
 pid_t pid;
 
-void HANDLE_SIG(int sig) {
+void HANDLE_SIG(int sig)
+{
 	if (pid > 0)
 		printf("Parent process caught signal %d\n", sig);
 	else if (pid == 0)
@@ -15,8 +16,11 @@ void HANDLE_SIG(int sig) {
 	exit(0);
 }
 
-int main() {
+int main()
+{
 	signal(SIGALRM, HANDLE_SIG);
+	alarm(5);
+
 	pid = fork();
 
 	/*if (pid > 0) {
@@ -25,6 +29,7 @@ int main() {
 	else {
 		alarm(5);
 	}*/
-	alarm(5);
-	while(1);
+	// alarm(5);
+	while (1)
+		;
 }

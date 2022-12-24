@@ -25,15 +25,15 @@ void process_command(char *cmdbuf)
 
 int main(int argc, char *argv[])
 {
-    int logout = 0, cmdsiz;
+    int cmdsiz;
     char cmdbuf[CMDSIZ];
-    while(!logout)
+    while(1)
     {
         write(1, "myshell> ", 9);
         cmdsiz = read(0, cmdbuf, CMDSIZ);
         cmdbuf[cmdsiz - 1] = '\0';
         if (strcmp("logout", cmdbuf) == 0)
-            ++logout;
+            break;
         else {
             process_command(cmdbuf);
             wait(NULL);

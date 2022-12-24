@@ -6,6 +6,7 @@
 int main(int argc, char *argv[]) {
     close(1);
     int fdout = open("vidu.doc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    //printf("%d\n", fdout);
 
     if (argc <= 1) {
         char *line = NULL;
@@ -15,8 +16,7 @@ int main(int argc, char *argv[]) {
             write(fdout, line, lineSize);
         }
         exit(0);
-    }
-    else {
+    } else {
         close(0);
         int fdin = open(argv[1], O_RDONLY);
         int nbytes;
